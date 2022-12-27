@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Vestcom.Job.Proxy</name>
+    </assembly>
+    <members>
+        <member name="T:Vestcom.Job.Proxy.EofFileOrderComparer">
+            <summary>
+            Used to compare an enumerable of files and place the "eof" files at the end or the beginning of the list using a eof pattern matching scheme.
+            </summary>
+        </member>
+        <member name="T:Vestcom.Job.Proxy.JobChangedEventArgs">
+            <summary>
+            Provides details about a job that has changed phase and/or state.
+            </summary>
+        </member>
+        <member name="M:Vestcom.Job.Proxy.JobChangedEventArgs.#ctor(System.Int32,Vestcom.Job.JobStateTypes,Vestcom.Job.JobPhaseTypes)">
+            <summary>
+            Creates a new instance of these event arguments.
+            </summary>
+            <param name="jobTaskId">The id of the job task that has changed.</param>
+            <param name="state">The current state of the job task.</param>
+            <param name="phase">The current phase of the job task.</param>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.JobChangedEventArgs.JobTaskId">
+            <summary>
+            Gets the id of this job task.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.JobChangedEventArgs.Phase">
+            <summary>
+            Gets the current phase.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.JobChangedEventArgs.State">
+            <summary>
+            Gets the current state.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.JobTaskRunOptions.JobChangedHandler">
+            <summary>
+            Gets or sets the handler used when watching job state changes.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.JobTaskRunOptions.WaitForCustomBillingFileCompletion">
+            <summary>
+            Gets or sets a value indicating if the process should wait until a custom billing file is completed
+            prior to returning control back to the calling method.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.JobTaskRunOptions.CustomBillingFileCompletionTimeout">
+            <summary>
+            Gets or sets a timeout for waiting on a custom billing file.
+            The default value is 5 minutes.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.JobTaskRunOptions.CleanDropFolderBeforeRunning">
+            <summary>
+            Gets or sets a value indicating if the drop folder should be cleaned prior to dropping the files.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.JobTaskRunOptions.RetryFileCopyTimes">
+            <summary>
+            Gets or sets the number of times a file copy operation will retry before failing.
+            </summary>
+        </member>
+        <member name="T:Vestcom.Job.Proxy.PreProcessor">
+            <summary>
+            Provides information about a registered pre-processor in UE2
+            </summary>
+        </member>
+        <member name="M:Vestcom.Job.Proxy.PreProcessor.GetAllPreProcessors">
+            <summary>
+            Gets all available registered pre-processors.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Vestcom.Job.Proxy.PreProcessor.GetAllPreProcessorsByCustomer(System.Int32)">
+            <summary>
+            Gets all registered pre-processors belonging to the specified customer.
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vestcom.Job.Proxy.PreProcessor.GetAllPreProcessorsByCustomerByRealm(System.Int32,Vestcom.Connection.RealmTypes)">
+            <summary>
+            Gets all registered preprocessors belonging to the specified customer and realm.
+            </summary>
+            <param name="customerId"></param>
+            <param name="realmType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vestcom.Job.Proxy.PreProcessor.GetAllPreProcessorsByName(System.String)">
+            <summary>
+            Gets all registered pre-processors by the specified name.
+            </summary>
+            <param name="preProcessorName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vestcom.Job.Proxy.PreProcessor.GetAllPreProcessorsByNameByRealm(System.String,Vestcom.Connection.RealmTypes)">
+            <summary>
+            Gets all registered pre-processors by the specified name and realm.
+            </summary>
+            <param name="preProcessorName"></param>
+            <param name="realmType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vestcom.Job.Proxy.PreProcessor.GetPreProcessor(System.Int32)">
+            <summary>
+            Gets the registered pre-processors by id.
+            </summary>
+            <param name="preProcessorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vestcom.Job.Proxy.PreProcessor.GetPreProcessorByJobDefinition(System.Int32)">
+            <summary>
+            Gets the registered pre-processor for the supplied Job Definition.
+            </summary>
+            <param name="jobDefinitionId">The Id of the Job Definition for which the pre-processor will be retrieved.</param>
+            <returns>The PreProcessor instance, or null, if no PreProcessor is registered with the Job Definition.</returns>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.PreProcessorId">
+            <summary>
+            Gets the id of this pre-processor.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.CustomerId">
+            <summary>
+            Gets the id of the customer to which this pre-processor belongs.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.PreProcessorKey">
+            <summary>
+            Gets the key of this pre-processor.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.PreProcessorName">
+            <summary>
+            Gets the name of this pre-processor.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.PreProcessorDescription">
+            <summary>
+            Gets the description of this pre-processor.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.FullPath">
+            <summary>
+            Gets the fully-qualified filename and path containing this pre-processor.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.Major">
+            <summary>
+            Gets the major version number.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.Minor">
+            <summary>
+            Gets the minor version number.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.Revision">
+            <summary>
+            Gets the revision number.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.PreprocessorLockType">
+            <summary>
+            Gets the lock type.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.PreProcessor.RealmType">
+            <summary>
+            Gets the realm.
+            </summary>
+        </member>
+        <member name="T:Vestcom.Job.Proxy.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Vestcom.Job.Proxy.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

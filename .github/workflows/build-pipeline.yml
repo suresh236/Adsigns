@@ -1,0 +1,52 @@
+name: Build Workflow
+on:
+  workflow_call:
+    inputs:
+       vProjectName:
+         required: true
+         type: string
+       vDotnetVersion:
+        required: true
+        type: string
+       vBuildConfiguration:
+         required: true
+         type: string
+       vProjectPath:
+        required: true
+        type: string
+ 
+jobs:
+  build:
+    name: Build
+  # runs-on: ubuntu-latest    
+    runs-on: windows-latest
+    steps:
+    # - name: Mockup Build
+    #   run: echo "Assuming Build has completed with project path ${{ inputs.vProjectPath }}"
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core SDK ${{ inputs.vDotnetVersion }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ inputs.vDotnetVersion }}
+
+    - name: Restore packages
+      run: dotnet restore "${{ inputs.vProjectPath }}"
+
+    - name: Build DotNET35
+      run: |
+           cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
+           .\MSBuild.exe $Env:GITHUB_WORKSPACE\Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
+
+#   - name: Build app
+#     run: dotnet build "${{ inputs.vProjectPath }}" --configuration ${{ inputs.vBuildConfiguration }} --no-restore --output ./output
+
+    - name: Test app
+      run: dotnet test "${{ inputs.vProjectPath }}" --no-build
+
+    - name: Upload the Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: AdsignsArtifact      # TO-DO: Needs to be moved to a variable (as input coming down from the caller workflow). Ideally, should include PR number.
+        path: ${{ github.workspace }}/output
