@@ -95,18 +95,26 @@ jobs:
            #dest: ${{ inputs.ProjectName}}.zip
            dest: ${{ env.PROJECT_NAME}}.zip
 
-       - name: Copy single file to remote
-         uses: garygrossgarten/github-action-scp@release
-         with:
-           #local: test/oof.txt
-           local: adsignsproject.zip
-           #remote: scp/single/oof.txt
-           remote: D:\adsign-testing-now\adsignsproject.zip
-           host: ${{ secrets.HOST }}
-           username: ${{ secrets.SSH_USER }}
+ //    - name: Copy single file to remote
+ //      uses: garygrossgarten/github-action-scp@release
+ //      with:
+ //        #local: test/oof.txt
+ //        local: adsignsproject.zip
+ //        #remote: scp/single/oof.txt
+ //        remote: D:\adsign-testing-now\adsignsproject.zip
+ //        host: ${{ secrets.HOST }}
+  //       username: ${{ secrets.SSH_USER }}
           # password: ${{ secrets.PASSWORD }}
+  //       key: ${{ secrets.KEY }}
+       - name: copy file via ssh key
+         uses: appleboy/scp-action@master
+         with:
+           host: ${{ secrets.HOST }}
+           username: ${{ secrets.USERNAME }}
+           port: ${{ secrets.PORT }}
            key: ${{ secrets.KEY }}
-
+           source: "adsignsproject.zip"
+           target: "D:\adsign-testing-now\adsignsproject.zip"
        - name: Decompress
          uses: TonyBogdanov/zip@1.0
          with:
