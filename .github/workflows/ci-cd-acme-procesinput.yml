@@ -1,121 +1,123 @@
-name: CI
-on:
-# workflow_dispatch:
-  
-  push:
-#  pull_request:
-    branches: [feature/test ]
-#env:
-# DOTNET_VERSION: '4.7.x'
-jobs:
-  ci:
-    #name: ci-${{matrix.os}}
-    #runs-on: ${{ matrix.os }}
-    runs-on: windows-latest
-    #strategy:
-     # matrix:
-#        os: [ubuntu-latest]
-     #    os: [windows-latest]
-    steps:
-    - uses: actions/checkout@v3
+      name: CI
+      on:
+      # workflow_dispatch:
 
-    - name: Setup .NET 
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: |
-          6.0
-          3.0 
-#          4.7.2
-#         3.5
-#         6.0
-#         7.0
-#   - name: Install sdk 3.0
-#     run: |
-#         sudo apt-get update && \
-#         sudo apt-get install -y dotnet-sdk-3.0.3
-#         sudo apt-get install -y dotnet-runtime-3.0.3
+        push:
+      #  pull_request:
+          branches: [feature/test ]
+      #env:
+      # DOTNET_VERSION: '4.7.x'
+      jobs:
+        ci:
+          #name: ci-${{matrix.os}}
+          #runs-on: ${{ matrix.os }}
+          runs-on: windows-latest
+          #strategy:
+           # matrix:
+      #        os: [ubuntu-latest]
+           #    os: [windows-latest]
+          steps:
+          - uses: actions/checkout@v3
 
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
+          - name: Setup .NET
+            uses: actions/setup-dotnet@v3
+            with:
+              dotnet-version: |
+                6.0
+                3.0
+      #          4.7.2
+      #         3.5
+      #         6.0
+      #         7.0
+      #   - name: Install sdk 3.0
+      #     run: |
+      #         sudo apt-get update && \
+      #         sudo apt-get install -y dotnet-sdk-3.0.3
+      #         sudo apt-get install -y dotnet-runtime-3.0.3
 
-    - name: Build project     
-      run: msbuild.exe $Env:GITHUB_WORKSPACE\Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
- 
+          - name: Add msbuild to PATH
+            uses: microsoft/setup-msbuild@v1.1
 
-      # Publish Artifact
-    - uses: actions/upload-artifact@v3.0.0
-      with:
-          name: AdsignsArtifact
-          path: ${{ github.workspace }}
- #   - name: Build app for release
- #     run: msbuild KVAT\src\preproc\papersigns\Vestcom.PaperSign.KVAT.ProcessInput\Vestcom.PaperSign.KVAT.ProcessInput.csproj -t:rebuild -verbosity:diag -property:Configuration=Release
-       
+          - name: Build project
+            run: msbuild.exe $Env:GITHUB_WORKSPACE\Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
 
- #   - name: Install dependencies
- #     run: dotnet restore KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj  
 
-#    - name: Build DotNET35
-#      run: |
-#          cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
-#           msbuild KVAT\src\preproc\papersigns\Vestcom.PaperSign.KVAT.ProcessInput\Vestcom.PaperSign.KVAT.ProcessInput.csproj   
+            # Publish Artifact
+          - uses: actions/upload-artifact@v3.0.0
+            with:
+                name: AdsignsArtifact
+                path: ${{ github.workspace }}
+       #   - name: Build app for release
+       #     run: msbuild KVAT\src\preproc\papersigns\Vestcom.PaperSign.KVAT.ProcessInput\Vestcom.PaperSign.KVAT.ProcessInput.csproj -t:rebuild -verbosity:diag -property:Configuration=Release
 
-#    - name: Build
-#      run: dotnet build --configuration Release --no-restore KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
 
-#     run: dotnet build KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
-#    - name: Test
-#      run: dotnet test --no-restore --verbosity normal KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
- 
+       #   - name: Install dependencies
+       #     run: dotnet restore KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
 
-  Deploy:
-    needs: ci
-    runs-on: windows-latest
- #   name: Deploy to --> ${{ inputs.envname }}
- #   environment:
- #     name: ${{ inputs.envname }}
+      #    - name: Build DotNET35
+      #      run: |
+      #          cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
+      #           msbuild KVAT\src\preproc\papersigns\Vestcom.PaperSign.KVAT.ProcessInput\Vestcom.PaperSign.KVAT.ProcessInput.csproj
 
-    env:
-   #   PROJECT_NAME: ${{ inputs.ProjectName }}
-      PROJECT_NAME: adsignsproject
+      #    - name: Build
+      #      run: dotnet build --configuration Release --no-restore KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
 
-    steps:
-# Download artifacts
-       - name: Download the artifact
-         uses: actions/download-artifact@v2
-         with:
-           name: AdsignsArtifact
-           path: ${{ github.workspace }}     
-       
-# Zip the artifact
-       - name: Zip the app contents
-         uses: vimtor/action-zip@v1
-         with:
-           files: ${{ github.workspace }}
-          #recursive: true
-           #dest: ${{ inputs.ProjectName}}.zip
-           dest: ${{ env.PROJECT_NAME}}.zip
+      #     run: dotnet build KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
+      #    - name: Test
+      #      run: dotnet test --no-restore --verbosity normal KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
 
- //    - name: Copy single file to remote
- //      uses: garygrossgarten/github-action-scp@release
- //      with:
- //        #local: test/oof.txt
- //        local: adsignsproject.zip
- //        #remote: scp/single/oof.txt
- //        remote: D:\adsign-testing-now\adsignsproject.zip
- //        host: ${{ secrets.HOST }}
-  //       username: ${{ secrets.SSH_USER }}
-          # password: ${{ secrets.PASSWORD }}
-  //       key: ${{ secrets.KEY }}
-       - name: copy file via ssh key
-         uses: appleboy/scp-action@master
-         with:
-           host: ${{ secrets.HOST }}
-           username: ${{ secrets.USERNAME }}
-           port: ${{ secrets.PORT }}
-           key: ${{ secrets.KEY }}
-           source: "adsignsproject.zip"
-           target: "D:\adsign-testing-now\adsignsproject.zip"
-       - name: Decompress
-         uses: TonyBogdanov/zip@1.0
-         with:
-           args: unzip -qq ./archive.zip -d ./target
+
+        Deploy:
+          needs: ci
+          runs-on: windows-latest
+       #   name: Deploy to --> ${{ inputs.envname }}
+       #   environment:
+       #     name: ${{ inputs.envname }}
+
+          env:
+         #   PROJECT_NAME: ${{ inputs.ProjectName }}
+            PROJECT_NAME: adsignsproject
+
+          steps:
+      # Download artifacts
+             - name: Download the artifact
+               uses: actions/download-artifact@v2
+               with:
+                 name: AdsignsArtifact
+                 path: ${{ github.workspace }}
+
+      # Zip the artifact
+             - name: Zip the app contents
+               uses: vimtor/action-zip@v1
+               with:
+                 files: ${{ github.workspace }}
+                #recursive: true
+                 #dest: ${{ inputs.ProjectName}}.zip
+                 dest: ${{ env.PROJECT_NAME}}.zip
+
+  #           - name: Copy single file to remote
+ #              uses: garygrossgarten/github-action-scp@release
+ #              with:
+               #local: test/oof.txt
+ #                local: adsignsproject.zip
+               #remote: scp/single/oof.txt
+ #                remote: D:\adsign-testing-now\adsignsproject.zip
+ #                host: ${{ secrets.HOST }}
+ #               username: ${{ secrets.SSH_USER }}
+                # password: ${{ secrets.PASSWORD }}
+ #                key: ${{ secrets.KEY }}
+
+             - name: copy file via ssh key
+               uses: appleboy/scp-action@master
+               with:
+                 host: ${{ secrets.HOST }}
+                 username: ${{ secrets.USERNAME }}
+                 port: ${{ secrets.PORT }}
+                 key: ${{ secrets.KEY }}
+                 source: "adsignsproject.zip"
+                 target: "D:\adsign-testing-now\adsignsproject.zip"
+
+             - name: Decompress
+               uses: TonyBogdanov/zip@1.0
+               with:
+                 args: unzip -qq ./archive.zip -d ./target
