@@ -1,0 +1,61 @@
+name: Deployment Workflow
+on: 
+  workflow_call:
+    inputs:
+      ProjectName:
+        required: true
+        type: string
+      ProjectPath:
+        required: true
+        type: string
+      BuildConfiguration:
+        required: true
+        type: string
+#      envname:
+#        required: true
+#        type: string         
+
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs: 
+  Deploy:
+    runs-on: ubuntu-latest
+ #   name: Deploy to --> ${{ inputs.envname }}
+ #   environment:
+ #     name: ${{ inputs.envname }}
+
+    env:
+      PROJECT_NAME: ${{ inputs.ProjectName }}
+
+    steps:
+# Download artifacts
+       - name: Download the artifact
+         uses: actions/download-artifact@v2
+         with:
+           name: AdsignsArtifact
+           path: ${{ github.workspace }}     
+       
+# Zip the artifact
+       - name: Zip the app contents
+         uses: vimtor/action-zip@v1
+         with:
+           files: ${{ github.workspace }}
+          #recursive: true
+           dest: ${{ inputs.ProjectName}}.zip
+
+       - name: Copy single file to remote
+         uses: garygrossgarten/github-action-scp@release
+         with:
+           local: test/oof.txt
+           remote: scp/single/oof.txt
+           host: ${{ secrets.HOST }}
+           username: ${{ secrets.SSH_USER }}
+           password: ${{ secrets.PASSWORD }}
+
+       - name: Decompress
+         uses: TonyBogdanov/zip@1.0
+         with:
+           args: unzip -qq ./archive.zip -d ./target

@@ -1,0 +1,350 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Vestcom.Connection
+</name>
+</assembly>
+<members>
+<member name="P:Vestcom.Connection.CredentialBase`1.IsNull">
+	<summary>
+ Gets a value indicating if this instance is considered empty or null.
+ </summary>
+</member><member name="P:Vestcom.Connection.CredentialBase`1.UserName">
+	<summary>
+ Gets the username of this credential instance.
+ </summary>
+</member><member name="P:Vestcom.Connection.CredentialBase`1.PassWord">
+	<summary>
+ Gets the password of this credential instance.
+ </summary>
+</member><member name="M:Vestcom.Connection.CredentialBase`1.ToString">
+	<summary>
+ Gets the display value of this credential instance.
+ </summary>
+</member><member name="M:Vestcom.Connection.CredentialBase`1.Instance">
+	<summary>
+ Gets the singleton instance of this type.
+ </summary>
+</member><member name="P:Vestcom.Connection.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:Vestcom.Connection.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:Vestcom.Connection.My.Resources.Resources.CompositionIndexes_CreateAll">
+	<summary>
+  Looks up a localized string similar to IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[CompositionContainer]') AND name = N'IX_CompositionContainer')
+CREATE NONCLUSTERED INDEX IX_CompositionContainer
+	ON dbo.CompositionContainer (ParentId)
+	INCLUDE (ContainerId,ZIndex,Sequence)
+	WITH (FILLFACTOR = 100)
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[CompositionContainer]') AND name = N'IX_CompositionContainer_DocumentId')
+CREATE NONCLUSTERED INDEX [IX_CompositionContainer_Do [rest of string was truncated]";.
+</summary>
+</member><member name="P:Vestcom.Connection.My.Resources.Resources.Jobs_CreateAll">
+	<summary>
+  Looks up a localized string similar to /****** Object:  Table [dbo].[ProductAssetTypes]  ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ProductAssetTypes]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[ProductAssetTypes](
+    [AssetTypeId] [smallint] NOT NULL,
+    [AssetType] [nvarchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+ CONSTRAINT [PK_ProductAssetTypes] PRIMARY KEY CLUSTERED 
+(
+    [AssetTypeId] ASC
+)WITH (PAD_INDEX = OFF, STAT [rest of string was truncated]";.
+</summary>
+</member><member name="P:Vestcom.Connection.My.Resources.Resources.Jobs_Package_CreateAll">
+	<summary>
+  Looks up a localized string similar to --create schema
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'PACKAGE')
+	EXEC('CREATE SCHEMA Package')
+GO
+
+--JobPackages
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Package].[JobPackages]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [Package].[JobPackages](
+	[JobTaskId] [int] NOT NULL,
+	[ParentJobTaskId] [int] NOT NULL,
+	[CustomerId] [int] NOT NULL,
+	[DivisionId] [int] NOT NULL,
+	[DatabaseId] [int] NOT NULL,
+	[RealmType] [int] NOT NULL,
+	[AgentRunType] [int] N [rest of string was truncated]";.
+</summary>
+</member><member name="P:Vestcom.Connection.My.Resources.Resources.JobsInfa_CreateAll">
+	<summary>
+  Looks up a localized string similar to /****** Object:  Schema [Package]    Script Date: 01/12/2015 12:44:47 ******/
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = N'Package')
+EXEC sys.sp_executesql N'CREATE SCHEMA [Package] AUTHORIZATION [dbo]'
+GO
+/****** Object:  Table [dbo].[OptInPrintSites]    Script Date: 01/12/2015 12:44:49 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OptInPrintSites]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[O [rest of string was truncated]";.
+</summary>
+</member><member name="T:Vestcom.Connection.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:Vestcom.Connection.Data.SqlAgentPoolData.GetAllAgentPools">
+	<summary>
+ Gets a list of all agent pools.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:Vestcom.Connection.ActivityResult.#ctor(System.Boolean,System.DateTime,System.DateTime)">
+	<summary>
+ Creates a new instance with the specified activity and date time values.
+ </summary>
+	<param name="isActive"></param>
+	<param name="currentDateTime"></param>
+</member><member name="P:Vestcom.Connection.ActivityResult.IsActive">
+	<summary>
+ Gets a value indicating relative activity.
+ </summary>
+</member><member name="P:Vestcom.Connection.ActivityResult.CurrentDateTime">
+	<summary>
+ Gets the current date and time.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:Vestcom.Connection.ActivityResult">
+	<summary>
+ Provides a result set of activity information from the server.
+ </summary>
+</member><member name="F:Vestcom.Connection.RealmTypesCollection.StandardRealms">
+	<summary>
+ Gets a collection of the standard realms
+ </summary>
+</member><member name="F:Vestcom.Connection.RealmTypesCollection.AllRealms">
+	<summary>
+ Gets a collection of all realms.
+ </summary>
+</member><member name="M:Vestcom.Connection.RealmTypesCollection.GetRealmOrDefault(System.Int32,Vestcom.Connection.RealmTypes)">
+	<summary>
+ Gets the realm specified by the integer parameter, or the supplied default value if that realm type is missing from this collection.
+ </summary>
+	<param name="realm">The realm to check.</param>
+	<param name="defaultIfMissing">The realm type to return if the requested value is missing from this collection.</param>
+	<returns>The found realm, or the default realm if not found.</returns>
+</member><member name="M:Vestcom.Connection.EnvironmentManager.GetMainWindowTextString(System.String)">
+	<summary>
+ Gets the text for a main window which includes the deployment environment.
+ </summary>
+	<param name="text">The standard main window text.</param>
+	<returns>The adjusted main window text.</returns>
+</member><member name="F:Vestcom.Connection.DeploymentUniverse.IPTranslatorSet.TestTranslators">
+	<summary>
+ Gets the translators for the test universe.
+ </summary>
+	<remarks></remarks>
+</member><member name="F:Vestcom.Connection.DeploymentUniverse.IPTranslatorSet.DisasterRecoveryTranslators">
+	<summary>
+ Gets the translators for the disaster recovery universe.
+ </summary>
+	<remarks></remarks>
+</member><member name="F:Vestcom.Connection.DeploymentUniverse.IPTranslatorSet.ProductionTranslators">
+	<summary>
+ Gets the list of translators for the production universe.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentUniverse.SpecificIPTranslator.IBMGateTranslator">
+	<summary>
+ Gets the translator for translating IBMGate.
+ </summary>
+</member><member name="T:Vestcom.Connection.DeploymentUniverse.SpecificIPTranslator">
+	<summary>
+ Provides translating capabilities for direct IP -&gt; IP lookups and translations
+ </summary>
+</member><member name="M:Vestcom.Connection.DeploymentUniverse.IPTranslator.Translate(System.String)">
+	<summary>
+ Translates the hostname to its corresponding ip address.
+ </summary>
+	<param name="hostName">The hostname to translate.</param>
+	<returns>The IPv4 address of the hostname as translated.</returns>
+</member><member name="T:Vestcom.Connection.DeploymentUniverse.IPTranslator">
+	<summary>
+ Provides translating capabilities for IP Addresses.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentUniverse.Production">
+	<summary>
+ The Production Universe environment.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentUniverse.Test">
+	<summary>
+ The Test Universe environment.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentUniverse.DisasterRecovery">
+	<summary>
+ The Disaster Recovery Universe environment.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentUniverse.StandardUniverses">
+	<summary>
+ Gets the collection of all standard universes.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentUniverse.AllUniverses">
+	<summary>
+ Gets the collection of all available universes.
+ </summary>
+</member><member name="P:Vestcom.Connection.DeploymentUniverse.Name">
+	<summary>
+ Gets the name of this deployment universe.
+ </summary>
+</member><member name="P:Vestcom.Connection.DeploymentUniverse.DeploymentEnvironments">
+	<summary>
+ Gets the collection of deployment environments available for this universe.
+ </summary>
+</member><member name="M:Vestcom.Connection.DeploymentUniverse.ResolveServer(System.String)">
+	<summary>
+ Resolves the supplied server to this universe's corresponding server.
+ The resolved server is returned as an IPv4 Address.
+ </summary>
+	<param name="hostName">The name of the server to lookup.</param>
+</member><member name="M:Vestcom.Connection.DeploymentUniverse.ResolveServer(System.String,System.Boolean)">
+	<summary>
+ Resolves the supplied server to this universe's corresponding server.
+ The resolved server is returned as an IPv4 Address.
+ </summary>
+	<param name="hostName">The name of the server to lookup.</param>
+	<param name="returnEmptyOnError">True to return <see cref="T:System.String"/> if an exception occurs, false to throw the exception.</param>
+</member><member name="M:Vestcom.Connection.DeploymentUniverse.ResolvePath(System.String)">
+	<summary>
+ Takes a path and resolves that server name (if the path is considered a UNC path) or 
+ converts a drive-letter based path to a UNC path and attempts resolution on it, based 
+ on this universe.
+ </summary>
+	<param name="path">The path to resolve.</param>
+</member><member name="M:Vestcom.Connection.DeploymentUniverse.ResolvePath(System.String,System.Boolean)">
+	<summary>
+ Takes a path and resolves that server name (if the path is considered a UNC path) or 
+ converts a drive-letter based path to a UNC path and attempts resolution on it, based 
+ on this universe.
+ </summary>
+	<param name="path">The path to resolve.</param>
+	<param name="returnEmptyOnError">True to return <see cref="T:System.String"/> if an exception occurs, false to throw the exception.</param>
+</member><member name="M:Vestcom.Connection.DeploymentUniverse.MaybeConvertLocalDriveToUncPath(System.String)">
+	<summary>
+ Possibly converts the supplied path to a unc path if possible.
+ </summary>
+	<param name="path">The path to convert.</param>
+	<returns>The converted path, or the original if the conversion could not be done.</returns>
+</member><member name="M:Vestcom.Connection.DeploymentUniverse.ResolveConnectionString(System.String)">
+	<summary>
+ Resolves the server contained in the connection string using the <see cref="T:System.Data.SqlClient.SqlConnectionStringBuilder"/>.
+ </summary>
+</member><member name="T:Vestcom.Connection.DeploymentUniverse">
+	<summary>
+ Provides delopyment universes.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentEnvironment.Local">
+	<summary>
+ Represents the local deployment environment.
+ This environment is available on the local machine in which the code is running.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentEnvironment.Dev">
+	<summary>
+ Represents the development environment for running developer testing.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentEnvironment.Stage">
+	<summary>
+ Represents the Stage environment used by PQA for testing.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentEnvironment.Production">
+	<summary>
+ Represents the production environment where customer production jobs run.
+ </summary>
+</member><member name="F:Vestcom.Connection.DeploymentEnvironment.AllDeploymentEnvironments">
+	<summary>
+ Gets the collection of all the deployment environments.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Vestcom.Connection.DeploymentEnvironment.GetDeploymentEnvironment(System.String)">
+	<summary>
+ Gets the first matching environment that matches the supplied name.
+ </summary>
+	<param name="name">The name of the environment to retrieve.</param>
+</member><member name="P:Vestcom.Connection.DeploymentEnvironment.Current">
+	<summary>
+ Gets the current environment type.
+ </summary>
+</member><member name="T:Vestcom.Connection.DeploymentEnvironment">
+	<summary>
+	</summary>
+</member><member name="P:Vestcom.Connection.CustomerConnection.ConnectionKey.Id">
+	<summary>
+ Gets the key identifier.
+ </summary>
+</member><member name="P:Vestcom.Connection.CustomerConnection.ConnectionKey.Universe">
+	<summary>
+ Gets the universe portion of this key.
+ </summary>
+</member><member name="T:Vestcom.Connection.CustomerConnection.ConnectionKey">
+	<summary>
+ Provides a key for a connection.
+ </summary>
+</member><member name="M:Vestcom.Connection.CustomerConnection.ConnectionSet.Register(System.Int32)">
+	<summary>
+ Registers the supplied id based on the current thread id.
+ </summary>
+	<param name="id"></param>
+</member><member name="M:Vestcom.Connection.CustomerConnection.ConnectionSet.Register(System.Int32,Vestcom.Connection.DeploymentUniverse)">
+	<summary>
+ Registers the supplied id and universe based on the current thread id.
+ </summary>
+	<param name="id"></param>
+	<param name="universe"></param>
+</member><member name="M:Vestcom.Connection.CustomerConnection.ConnectionSet.Unregister">
+	<summary>
+ Unregisters based on the current thread.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Vestcom.Connection.CustomerConnection.ConnectionSet.GetIdByCurrentThread">
+	<summary>
+ Get the current id by the current thread id.
+ </summary>
+</member><member name="M:Vestcom.Connection.CustomerConnection.ConnectionSet.GetKeyByCurrentThread">
+	<summary>
+ Gets the current key registered on the thread.
+ </summary>
+</member><member name="M:Vestcom.Connection.CustomerConnection.ConnectionSet.HasRegisteredIds">
+	<summary>
+ Gets a value indicating if any ids have registered.
+ </summary>
+</member><member name="M:Vestcom.Connection.CustomerConnection.ConnectionSet.HasConnections">
+	<summary>
+ Gets a value indicating if this set has any loaded connections.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:Vestcom.Connection.CustomerConnection.ConnectionSet.ClearConnections">
+	<summary>
+ Clears all current connections.
+ </summary>
+</member><member name="M:Vestcom.Connection.CustomerConnection.ConnectionSet.Clear">
+	<summary>
+ Clears all cached connections and threads.
+ </summary>
+	<remarks></remarks>
+</member><member name="P:Vestcom.Connection.CustomerConnection.ConnectionSet.ConnectionCount">
+	<summary>
+ Gets the count of the current number of cached connections.
+ </summary>
+</member>
+</members>
+</doc>

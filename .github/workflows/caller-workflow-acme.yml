@@ -1,0 +1,91 @@
+name: 'ACME CI-CD PIPELINE WORKFLOW'
+ 
+on:
+  workflow_dispatch:
+  
+# push:
+    paths:
+      - 'Acme/**' 
+      - '.github/workflows/**'
+    branches:
+      - '**'
+      - 'feature/sadula/test'
+
+
+# concurrency:
+#   group: ci-pre-release-${{ github.ref }}-1
+#   cancel-in-progress: true
+
+
+jobs:
+  call-init:
+    uses: vestcom/adsigns/.github/workflows/init.yml@feature/sadula/test
+    with:
+      WorkflowConfigFile: ./Acme/workflow.conf
+
+  call-build-pipeline:
+    needs: call-init
+    if:
+      ${{ contains(github.ref, needs.call-init.outputs.IncludedBranchName) || startsWith('refs/heads/main', github.ref) }}
+    with:
+      vProjectName: ${{ needs.call-init.outputs.ProjectName }}    
+      vDotnetVersion: ${{ needs.call-init.outputs.DotnetVersion  }}
+      vBuildConfiguration: ${{ needs.call-init.outputs.BuildConfiguration }}
+      vProjectPath: ${{ needs.call-init.outputs.ProjectPath }}
+    uses: vestcom/adsigns/.github/workflows/build-pipeline.yml@feature/sadula/test
+    secrets: inherit
+ 
+ 
+  # call-unit-tests:
+  #   uses: ...
+
+  # call-create-release
+  
+
+  # call-deploy-nonprod:
+  #   needs: [call-init, call-build-pipeline]
+  #   if:
+  #     ${{ contains(github.ref, needs.call-init.outputs.IncludedBranchName) || startsWith('refs/heads/main', github.ref) }}
+  #   uses: vestcom/adsigns/.github/workflows/deploy-pipeline.yml@main
+  #   with:
+  #     envname: nonprod
+  #     ProjectName: ${{ needs.call-init.outputs.ProjectName }}       
+  #     BuildConfiguration: ${{ needs.call-init.outputs.BuildConfiguration }}
+  #     ProjectPath: ${{ needs.call-init.outputs.ProjectPath }}
+  #   secrets: inherit
+
+  call-deploy-dev:
+    needs: [call-init, call-build-pipeline]
+    if:
+      ${{ contains(github.ref, needs.call-init.outputs.IncludedBranchName) || startsWith('refs/heads/main', github.ref) }}
+    uses: vestcom/adsigns/.github/workflows/deploy-pipeline.yml@feature/sadula/test
+    with:
+      #envname: dev
+      ProjectName: ${{ needs.call-init.outputs.ProjectName }}          
+      BuildConfiguration: ${{ needs.call-init.outputs.BuildConfiguration }}
+      ProjectPath: ${{ needs.call-init.outputs.ProjectPath }}
+    secrets: inherit
+
+#  call-deploy-qa:
+#    needs: [call-init, call-build-pipeline, call-deploy-dev]
+#    if:
+#      ${{ startsWith('refs/heads/main', github.ref) }}
+#    uses: vestcom/adsigns/.github/workflows/deploy-pipeline.yml@main
+#    with:
+#      envname: qa
+#      ProjectName: ${{ needs.call-init.outputs.ProjectName }}    
+#      BuildConfiguration: ${{ needs.call-init.outputs.BuildConfiguration }}
+#      ProjectPath: ${{ needs.call-init.outputs.ProjectPath }}
+#    secrets: inherit
+
+#  call-deploy-prod:
+#    needs: [call-init, call-build-pipeline, call-deploy-dev, call-deploy-qa]
+#    if:
+#      ${{ startsWith('refs/heads/main', github.ref) }}
+#    uses: vestcom/adsigns/.github/workflows/deploy-pipeline.yml@main
+#    with:
+#      envname: prod
+#      ProjectName: ${{ needs.call-init.outputs.ProjectName }}          
+#      BuildConfiguration: ${{ needs.call-init.outputs.BuildConfiguration }}
+#      ProjectPath: ${{ needs.call-init.outputs.ProjectPath }}
+#    secrets: inherit

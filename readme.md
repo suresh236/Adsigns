@@ -1,1 +1,0 @@
-Adsign application for testing
