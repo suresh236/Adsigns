@@ -102,12 +102,10 @@ jobs:
            local: adsignsproject.zip
            #remote: scp/single/oof.txt
            remote: D:\adsign-testing-now\adsignsproject.zip
-          # host: ${{ secrets.HOST }}
-           host: del1-lhp-n72074
-         #  username: ${{ secrets.SSH_USER }}
-           username: synapse\sadula.kumar
+           host: ${{ secrets.HOST }}
+           username: ${{ secrets.SSH_USER }}
           # password: ${{ secrets.PASSWORD }}
-           password: Suresh@888
+           key: ${{ secrets.KEY }}
 
        - name: Decompress
          uses: TonyBogdanov/zip@1.0
