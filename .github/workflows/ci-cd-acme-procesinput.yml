@@ -123,9 +123,9 @@
                  username: ${{ secrets.USERNAME }}
                  host: ${{ secrets.HOST }}
                  port: ${{ secrets.PORT }}
-                 key: ${{ secrets.KEY }}
-                 local_path: "adsignsproject.zip"
-                 target: "D:/GHTesting"
+                 ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+                 local_path: ./*
+                 remote_path: D:/GHTesting
                  args: '-o ConnectTimeout=5'
 
 
