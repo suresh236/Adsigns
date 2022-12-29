@@ -107,16 +107,28 @@
                 # password: ${{ secrets.PASSWORD }}
  #                key: ${{ secrets.KEY }}
 
-             - name: copy file via ssh key
-               uses: appleboy/scp-action@master
+  #           - name: copy file via ssh key
+  #             uses: appleboy/scp-action@master
+  #             with:
+  #               host: ${{ secrets.HOST }}
+  #               username: ${{ secrets.USERNAME }}
+  #               port: ${{ secrets.PORT }}
+  #               key: ${{ secrets.KEY }}
+   #              source: "adsignsproject.zip"
+           #      target: "D:/adsign-testing-now/adsignsproject.zip"
+   #              target: "D:/GHTesting"
+             - name: SFTP DEPLOY
+               uses: wlicc/SFTP-Deploy-Action@v1.2.1
                with:
-                 host: ${{ secrets.HOST }}
                  username: ${{ secrets.USERNAME }}
+                 host: ${{ secrets.HOST }}
                  port: ${{ secrets.PORT }}
                  key: ${{ secrets.KEY }}
-                 source: "adsignsproject.zip"
-           #      target: "D:/adsign-testing-now/adsignsproject.zip"
-                 target: "D:/adsign-testing-now"
+                 local_path: "adsignsproject.zip"
+                 target: "D:/GHTesting"
+
+
+
 
              - name: Decompress
                uses: TonyBogdanov/zip@1.0
