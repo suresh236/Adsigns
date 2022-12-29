@@ -118,7 +118,7 @@
            #      target: "D:/adsign-testing-now/adsignsproject.zip"
    #              target: "D:/GHTesting"
              - name: SFTP DEPLOY
-               uses: wlicc/SFTP-Deploy-Action@v1.2.1
+               uses: wlixcc/SFTP-Deploy-Action@v1.2.1
                with:
                  username: ${{ secrets.USERNAME }}
                  host: ${{ secrets.HOST }}
