@@ -69,7 +69,7 @@
 
         Deploy:
           needs: ci
-          runs-on: windows-latest
+          runs-on: ubuntu-latest
        #   name: Deploy to --> ${{ inputs.envname }}
        #   environment:
        #     name: ${{ inputs.envname }}
@@ -115,7 +115,7 @@
                  port: ${{ secrets.PORT }}
                  key: ${{ secrets.KEY }}
                  source: "adsignsproject.zip"
-                 target: "D:\adsign-testing-now\adsignsproject.zip"
+                 target: "D:/adsign-testing-now/adsignsproject.zip"
 
              - name: Decompress
                uses: TonyBogdanov/zip@1.0
