@@ -115,7 +115,8 @@
                  port: ${{ secrets.PORT }}
                  key: ${{ secrets.KEY }}
                  source: "adsignsproject.zip"
-                 target: "D:/adsign-testing-now/adsignsproject.zip"
+           #      target: "D:/adsign-testing-now/adsignsproject.zip"
+                 target: "D:/adsign-testing-now"
 
              - name: Decompress
                uses: TonyBogdanov/zip@1.0
