@@ -126,6 +126,7 @@
                  key: ${{ secrets.KEY }}
                  local_path: "adsignsproject.zip"
                  target: "D:/GHTesting"
+                 args: '-o ConnectTimeout=5'
 
 
 
