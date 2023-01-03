@@ -115,9 +115,9 @@
                  password: ${{ secrets.PASSWORD }}
                  port: ${{ secrets.PORT }}
                #  key: ${{ secrets.KEY }}
-                 source: adsignsproject.zip
+                 source: "adsignsproject.zip"
            #      target: "D:/adsign-testing-now/adsignsproject.zip
-                 target: D:/GHTesting
+                 target: "D:/GHTesting"
   #           - name: SFTP DEPLOY
   #             uses: wlixcc/SFTP-Deploy-Action@v1.2.1
   #             with:
