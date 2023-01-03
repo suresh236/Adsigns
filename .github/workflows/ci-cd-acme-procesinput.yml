@@ -107,7 +107,7 @@
                 # password: ${{ secrets.PASSWORD }}
  #                key: ${{ secrets.KEY }}
 
-             - name: copy file via ssh key
+             - name: copy file via ssh key   ###
                uses: appleboy/scp-action@master
                with:
                  host: ${{ secrets.HOST }}
