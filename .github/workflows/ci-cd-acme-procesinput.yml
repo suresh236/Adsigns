@@ -118,7 +118,7 @@
   #               source: "adsignsproject.zip"
            #      target: "D:/adsign-testing-now/adsignsproject.zip
   #               target: "D:/GHTesting"
-             - name: copy file via ssh password
+             - name: copy file via ssh password  #####
                uses: ./
                with:
                    host: ${{ secrets.HOST }}
