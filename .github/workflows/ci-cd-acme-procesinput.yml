@@ -119,9 +119,9 @@
         #         port: ${{ secrets.PORT }}
                #  key: ${{ secrets.KEY }}
                #  source: "adsignsproject.zip"
-                 source: "."
+        #         source: "."
            #      target: "D:/adsign-testing-now/adsignsproject.zip
-                 target: "D:/GHTesting"
+        #         target: "D:/GHTesting"
   #           - name: copy file via ssh password  #####
   #             uses: ./
   #             with:
