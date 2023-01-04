@@ -109,7 +109,7 @@
 
              - name: copy action
              #  run: scp -r /home/runner/work/Adsigns/Adsigns sadula.kumar@del1-lhp-n72074:D:/GHTesting
-               run: scp -r -P 22 /home/runner/work/Adsigns/Adsigns sadula.kumar@192.168.56.1:D:/GHTesting
+               run: scp -r -i -P 22 /home/runner/work/Adsigns/Adsigns sadula.kumar@192.168.56.1:/D:/GHTesting
 
 
         #     - name: copy file via ssh key   ####
