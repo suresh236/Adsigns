@@ -106,14 +106,16 @@
  #               username: ${{ secrets.SSH_USER }}
                 # password: ${{ secrets.PASSWORD }}
  #                key: ${{ secrets.KEY }}
-
-             - name: copy file via ssh key   ####
-               uses: appleboy/scp-action@master
-               with:
-                 host: ${{ secrets.HOST }}
-                 username: ${{ secrets.USERNAME }}
-                 password: ${{ secrets.PASSWORD }}
-                 port: ${{ secrets.PORT }}
+             - name: copy action
+               run: |
+                    scp -r /home/runner/work/Adsigns/Adsigns sadula.kumar@del1-lhp-n72074:D:/GHTesting
+        #     - name: copy file via ssh key   ####
+        #       uses: appleboy/scp-action@master
+        #       with:
+        #         host: ${{ secrets.HOST }}
+        #         username: ${{ secrets.USERNAME }}
+        #         password: ${{ secrets.PASSWORD }}
+        #         port: ${{ secrets.PORT }}
                #  key: ${{ secrets.KEY }}
                #  source: "adsignsproject.zip"
                  source: "."
