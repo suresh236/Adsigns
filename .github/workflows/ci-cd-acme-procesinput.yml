@@ -112,8 +112,8 @@
              #  run: scp -r /home/runner/work/Adsigns/Adsigns sadula.kumar@192.168.56.1:/D:/GHTesting
              #  run: scp -r sadula.kumar@192.168.56.1:/home/runner/work/Adsigns/Adsigns/adsignsproject.zip 'D:/GHTesting'
              - name: Copy folder content recursively to remote
-                 uses: garygrossgarten/github-action-scp@release
-                 with:
+               uses: garygrossgarten/github-action-scp@release
+               with:
                    local: adsignsproject.zip
                    remote: D:/GHTesting
                    host: ${{ secrets.HOST }}
