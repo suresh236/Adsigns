@@ -95,7 +95,7 @@
                  #dest: ${{ inputs.ProjectName}}.zip
                  dest: ${{ env.PROJECT_NAME }}.zip
 
-
+             - name: file copy to remote server
                uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
                with:
                  ftp_host: ${{ secrets.FTP_HOST }}
