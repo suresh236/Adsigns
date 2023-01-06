@@ -93,33 +93,19 @@
                  files: ${{ github.workspace }}
                 #recursive: true
                  #dest: ${{ inputs.ProjectName}}.zip
-                 dest: ${{ env.PROJECT_NAME}}.zip
+                 dest: ${{ env.PROJECT_NAME }}.zip
 
-  #           - name: Copy single file to remote
- #              uses: garygrossgarten/github-action-scp@release
- #              with:
-               #local: test/oof.txt
- #                local: adsignsproject.zip
-               #remote: scp/single/oof.txt
- #                remote: D:\adsign-testing-now\adsignsproject.zip
- #                host: ${{ secrets.HOST }}
- #               username: ${{ secrets.SSH_USER }}
-                # password: ${{ secrets.PASSWORD }}
- #                key: ${{ secrets.KEY }}
 
-           #  - name: copy action
-             #  run: scp -r /home/runner/work/Adsigns/Adsigns sadula.kumar@del1-lhp-n72074:D:/GHTesting
-             #  run: scp -r /home/runner/work/Adsigns/Adsigns sadula.kumar@192.168.56.1:/D:/GHTesting
-             #  run: scp -r sadula.kumar@192.168.56.1:/home/runner/work/Adsigns/Adsigns/adsignsproject.zip 'D:/GHTesting'
-             - name: Copy folder content recursively to remote
-               uses: garygrossgarten/github-action-scp@release
+               uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
                with:
-                   local: home/runner/work/Adsigns/Adsigns
-                   remote: D:/GHTesting
-                   host: ${{ secrets.HOST }}
-                   username: ${{ secrets.SSH_USER }}
-                   password: ${{ secrets.PASSWORD }}
-                   privateKey: ${{ secrets.PRIVATE_KEY}}
+                 ftp_host: ${{ secrets.FTP_HOST }}
+                 ftp_username: ${{ secrets.FTP_USERNAME }}
+                 ftp_password: ${{ secrets.FTP_PASSWORD }}
+                 local_source_dir: "/home/runner/work/Adsigns/Adsigns/*"
+                 dist_target_dir: "D:/GHTesting"
+                 delete: "true"
+                 exclude: "'^logs/' '^README.md'"
+
         #     - name: copy file via ssh key   ####
         #       uses: appleboy/scp-action@master
         #       with:
@@ -132,6 +118,7 @@
         #         source: "."
            #      target: "D:/adsign-testing-now/adsignsproject.zip
         #         target: "D:/GHTesting"
+             -
   #           - name: copy file via ssh password  #####
   #             uses: ./
   #             with:
@@ -141,6 +128,7 @@
   #                 port: ${{ secrets.PORT }}
   #                 source: "adsignsproject.zip"
   #                 target: "D:/GHTesting"
+
   #           - name: SFTP DEPLOY
   #             uses: wlixcc/SFTP-Deploy-Action@v1.2.1
   #             with:
