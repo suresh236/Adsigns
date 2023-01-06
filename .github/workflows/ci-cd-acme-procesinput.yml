@@ -118,7 +118,7 @@
         #         source: "."
            #      target: "D:/adsign-testing-now/adsignsproject.zip
         #         target: "D:/GHTesting"
-             -
+
   #           - name: copy file via ssh password  #####
   #             uses: ./
   #             with:
