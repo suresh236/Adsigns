@@ -140,9 +140,6 @@
   #               remote_path: "D:/GHTesting"
   #              args: '-o ConnectTimeout=5'
 
-
-
-
              - name: Decompress
                uses: TonyBogdanov/zip@1.0
                with:
