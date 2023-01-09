@@ -37,16 +37,22 @@
 
           - name: Add msbuild to PATH
             uses: microsoft/setup-msbuild@v1.1
-
+            
+          - name: Install dependencies
+            run: dotnet restore Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
+            
           - name: Build project
             run: msbuild.exe $Env:GITHUB_WORKSPACE\Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
-
+           
+          - name: Test
+            run: dotnet test --no-restore --verbosity normal Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
 
             # Publish Artifact
           - uses: actions/upload-artifact@v3.0.0
             with:
                 name: AdsignsArtifact
                 path: ${{ github.workspace }}
+                
        #   - name: Build app for release
        #     run: msbuild KVAT\src\preproc\papersigns\Vestcom.PaperSign.KVAT.ProcessInput\Vestcom.PaperSign.KVAT.ProcessInput.csproj -t:rebuild -verbosity:diag -property:Configuration=Release
 
