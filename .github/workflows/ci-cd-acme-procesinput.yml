@@ -53,19 +53,28 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: AdsignsArtifact
+          path: ${{ github.workspace }}
 
   #    - name: Copy artifact to remote server
   #      uses: actions/ssh-auth@v0
   #      with:
   #        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Copy artifact to remote server
-        uses: actions/ssh-action@master
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v0.1.7
         with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          command: 'scp my-artifact.zip username@remote_host:/path/to/remote/folder'
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
+
+#      - name: Copy artifact to remote server
+ #       uses: actions/ssh-action@master
+ #       with:
+ #         ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+ #         host: ${{ secrets.HOST }}
+ #         username: ${{ secrets.USERNAME }}
+  #        command: 'scp my-artifact.zip username@remote_host:/path/to/remote/folder'
 
             #       - name: copy file via ssh key   ####
             #        uses: appleboy/scp-action@master
