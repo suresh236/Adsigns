@@ -35,7 +35,7 @@ jobs:
       - uses: actions/upload-artifact@v3.0.0
         with:
           name: AdsignsArtifact
-   #       path: ${{ github.workspace }}
+          path: ${{ github.workspace }}
 
   ######## Deploy actions steps on to the targeted server #################
 
