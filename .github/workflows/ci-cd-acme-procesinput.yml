@@ -1,153 +1,87 @@
-      name: CI
-      on:
-      # workflow_dispatch:
+name: CI
+on:
+#  workflow_dispatch:
 
-        push:
-      #  pull_request:
-          branches: [feature/test ]
-      #env:
-      # DOTNET_VERSION: '4.7.x'
-      jobs:
-        ci:
-          #name: ci-${{matrix.os}}
-          #runs-on: ${{ matrix.os }}
-          runs-on: windows-latest
-          #strategy:
-           # matrix:
-      #        os: [ubuntu-latest]
-           #    os: [windows-latest]
-          steps:
-          - uses: actions/checkout@v3
+  push:
+    branches: [ feature/ci-cd-acme ]
 
-          - name: Setup .NET
-            uses: actions/setup-dotnet@v3
-            with:
-              dotnet-version: |
-                6.0
-                3.0
-      #          4.7.2
-      #         3.5
-      #         6.0
-      #         7.0
-      #   - name: Install sdk 3.0
-      #     run: |
-      #         sudo apt-get update && \
-      #         sudo apt-get install -y dotnet-sdk-3.0.3
-      #         sudo apt-get install -y dotnet-runtime-3.0.3
+jobs:
+  ci:
+    runs-on: windows-latest
 
-          - name: Add msbuild to PATH
-            uses: microsoft/setup-msbuild@v1.1
-            
-          - name: Install dependencies
-            run: dotnet restore Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
-            
-          - name: Build project
-            run: msbuild.exe $Env:GITHUB_WORKSPACE\Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
-           
-          - name: Test
-            run: dotnet test --no-restore --verbosity normal Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
+    steps:
+      - uses: actions/checkout@v3
 
-            # Publish Artifact
-          - uses: actions/upload-artifact@v3.0.0
-            with:
-                name: AdsignsArtifact
-                path: ${{ github.workspace }}
-                
-       #   - name: Build app for release
-       #     run: msbuild KVAT\src\preproc\papersigns\Vestcom.PaperSign.KVAT.ProcessInput\Vestcom.PaperSign.KVAT.ProcessInput.csproj -t:rebuild -verbosity:diag -property:Configuration=Release
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            6.0
+            3.0
 
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
 
-       #   - name: Install dependencies
-       #     run: dotnet restore KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
+      - name: Install dependencies
+        run: dotnet restore Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
 
-      #    - name: Build DotNET35
-      #      run: |
-      #          cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
-      #           msbuild KVAT\src\preproc\papersigns\Vestcom.PaperSign.KVAT.ProcessInput\Vestcom.PaperSign.KVAT.ProcessInput.csproj
+      - name: Build project
+        run: msbuild.exe $Env:GITHUB_WORKSPACE\Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
 
-      #    - name: Build
-      #      run: dotnet build --configuration Release --no-restore KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal Acme\src\preproc\papersign\Vestcom.PaperSign.ACME.ProcessInput\Vestcom.PaperSign.ACME.ProcessInput.csproj
 
-      #     run: dotnet build KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
-      #    - name: Test
-      #      run: dotnet test --no-restore --verbosity normal KVAT/src/preproc/papersigns/Vestcom.PaperSign.KVAT.ProcessInput/Vestcom.PaperSign.KVAT.ProcessInput.csproj
+        # Publish Artifact
+      - uses: actions/upload-artifact@v3.0.0
+        with:
+          name: AdsignsArtifact
+   #       path: ${{ github.workspace }}
 
+  ######## Deploy actions steps on to the targeted server #################
 
-        Deploy:
-          needs: ci
-          runs-on: ubuntu-latest
-       #   name: Deploy to --> ${{ inputs.envname }}
-       #   environment:
-       #     name: ${{ inputs.envname }}
+  Deploy:
+    needs: ci
+    runs-on: ubuntu-latest
 
-          env:
-         #   PROJECT_NAME: ${{ inputs.ProjectName }}
-            PROJECT_NAME: adsignsproject
+    env:
+      #   PROJECT_NAME: ${{ inputs.ProjectName }}
+      PROJECT_NAME: adsignsproject
 
-          steps:
+    steps:
       # Download artifacts
-             - name: Download the artifact
-               uses: actions/download-artifact@v2
-               with:
-                 name: AdsignsArtifact
-                 path: ${{ github.workspace }}
+      - name: Download the artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: AdsignsArtifact
 
-      # Zip the artifact
-             - name: Zip the app contents
-               uses: vimtor/action-zip@v1
-               with:
-                 files: ${{ github.workspace }}
-                #recursive: true
-                 #dest: ${{ inputs.ProjectName}}.zip
-                 dest: ${{ env.PROJECT_NAME }}.zip
+      - name: Copy artifact to remote server
+        uses: actions/ssh-auth@v0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Copy artifact to remote server
+        uses: actions/ssh-action@master
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          command: 'scp my-artifact.zip username@remote_host:/path/to/remote/folder'
 
-     #        - name: file copy to remote server
-     #          uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
-     #          with:
-     #            ftp_host: ${{ secrets.FTP_HOST }}
-     #            ftp_username: ${{ secrets.FTP_USERNAME }}
-     #            ftp_password: ${{ secrets.FTP_PASSWORD }}
-     #            local_source_dir: "/home/runner/work/Adsigns/Adsigns/*"
-     #            dist_target_dir: "D:/GHTesting"
-     #            delete: "true"
-     #            exclude: "'^logs/' '^README.md'"
-
-             - name: copy file via ssh key   ####
-               uses: appleboy/scp-action@master
-               with:
-                 host: ${{ secrets.HOST }}
-                 username: ${{ secrets.USERNAME }}
+            #       - name: copy file via ssh key   ####
+            #        uses: appleboy/scp-action@master
+            #         with:
+            #             host: ${{ secrets.HOST }}
+            #             username: ${{ secrets.USERNAME }}
             #     password: ${{ secrets.PASSWORD }}
-                 port: ${{ secrets.PORT }}
-                 key: ${{ secrets.KEY }}
-                 source: "adsignsproject.zip"
-        #         source: "."
-                 target: "D:/adsign-testing-now/adsignsproject.zip
-        #         target: "D:/GHTesting"
+            #             port: ${{ secrets.PORT }}
+            #             key: ${{ secrets.KEY }}
+            #             source: "adsignsproject.zip"
+            #    source: "."
+            #    target: "D:/adsign-testing-now/adsignsproject.zip
+            #             target: D:/GHTesting
 
-  #           - name: copy file via ssh password  #####
-  #             uses: ./
-  #             with:
-  #                 host: ${{ secrets.HOST }}
-  #                 username: ${{ secrets.USERNAME }}
-  #                 password: ${{ secrets.PASSWORD }}
-  #                 port: ${{ secrets.PORT }}
-  #                 source: "adsignsproject.zip"
-  #                 target: "D:/GHTesting"
 
-  #           - name: SFTP DEPLOY
-  #             uses: wlixcc/SFTP-Deploy-Action@v1.2.1
-  #             with:
-  #               username: ${{ secrets.USERNAME }}
-  #               server: ${{ secrets.SERVER }}
-  #               port: ${{ secrets.PORT }}
-  #              ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-  #               local_path: "./*"
-  #               remote_path: "D:/GHTesting"
-  #              args: '-o ConnectTimeout=5'
-
-             - name: Decompress
-               uses: TonyBogdanov/zip@1.0
-               with:
-                 args: unzip -qq ./archive.zip -d ./target
+      - name: Decompress
+        uses: TonyBogdanov/zip@1.0
+        with:
+          args: unzip -qq ./archive.zip -d ./target
