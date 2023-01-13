@@ -54,10 +54,10 @@ jobs:
         with:
           name: AdsignsArtifact
 
-      - name: Copy artifact to remote server
-        uses: actions/ssh-auth@v0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  #    - name: Copy artifact to remote server
+  #      uses: actions/ssh-auth@v0
+  #      with:
+  #        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Copy artifact to remote server
         uses: actions/ssh-action@master
